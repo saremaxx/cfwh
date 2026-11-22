@@ -5,10 +5,10 @@
 #include <mach/mach.h>
 #include <libkern/OSCacheControl.h>
 
-// RVA метода IsWallhacked из PlayerCulling (из dump.cs)
-#define RVA_PLAYER_CULLING_WALLHACK 0x162DFB8
+// RVA метода HasLineOfSight из PlayerCulling
+#define RVA_PLAYER_CULLING_WALLHACK 0x162E228
 
-// Инструкции ARM64: mov w0, #1 (возврат true); ret (выход)
+// mov w0, #1; ret (Всегда возвращаем true)
 static const uint32_t patch_bytes[] = { 0x20008052, 0xC0035FD6 }; 
 
 __attribute__((constructor))
