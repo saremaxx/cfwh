@@ -1,5 +1,6 @@
 ARCHS = arm64
 TARGET = iphone:clang:latest:15.0
+SIGNING = NO
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = cfwh
