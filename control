@@ -1,0 +1,8 @@
+Package: com.panda.cfwh
+Name: CF WH
+Version: 1.0
+Architecture: iphoneos-arm
+Description: WallHack
+Maintainer: Panda
+Author: Panda
+Section: Tweaks
