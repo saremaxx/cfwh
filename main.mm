@@ -5,8 +5,11 @@
 #include <mach/mach.h>
 #include <libkern/OSCacheControl.h>
 
-#define RVA_PLAYER_CULLING_AWAKE 0x162D024
-static const uint32_t patch_bytes[] = { 0x00008052, 0xC0035FD6 }; 
+// RVA метода IsWallhacked из PlayerCulling (из dump.cs)
+#define RVA_PLAYER_CULLING_WALLHACK 0x162DFB8
+
+// Инструкции ARM64: mov w0, #1 (возврат true); ret (выход)
+static const uint32_t patch_bytes[] = { 0x20008052, 0xC0035FD6 }; 
 
 __attribute__((constructor))
 static void init() {
@@ -20,8 +23,9 @@ static void init() {
             }
         }
         if (base != 0) {
-            uintptr_t target = base + RVA_PLAYER_CULLING_AWAKE;
+            uintptr_t target = base + RVA_PLAYER_CULLING_WALLHACK;
             vm_address_t page = target & ~(PAGE_SIZE - 1);
+            
             vm_protect(mach_task_self(), page, PAGE_SIZE, false, VM_PROT_READ | VM_PROT_WRITE | VM_PROT_EXECUTE);
             memcpy((void *)target, patch_bytes, sizeof(patch_bytes));
             sys_icache_invalidate((void *)target, sizeof(patch_bytes));
